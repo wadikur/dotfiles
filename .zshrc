@@ -162,7 +162,7 @@ cont(){
   fi
 }
 
-export WEECHAT_HOME="~/.config/weechat"
+#export WEECHAT_HOME="~/.config/weechat"
 
 export EDITOR=vim
 export BROWSER=firefox
@@ -179,7 +179,7 @@ alias h="history"
 alias p="pwd -P"
 alias s="sudo -s"
 alias CD="cd"
-alias hc='herbstclient'
+#alias hc='herbstclient'
 alias ff='firefox'
 alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 # Force tmux to use 256 colors
@@ -189,7 +189,7 @@ alias config='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 #alias c="while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &; clear"
 
 alias netprocs="lsof -P -i -n"
-alias up="sudo apt update && sudo apt upgrade"
+alias up="sudo pacman -Syyuu"
 # So that sudo doesnt override aliases (doesnt work with flags)
 # alias sudo='sudo '
 

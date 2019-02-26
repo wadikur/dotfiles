@@ -12,7 +12,15 @@ function run {
         $@&
     fi
 }
-
+if (command -v gnome-keyring-daemon && ! pgrep gnome-keyring-d); then
+    gnome-keyring-daemon --daemonize --login &
+fi
+if (command -v start-pulseaudio-x11 && ! pgrep pulseaudio); then
+    start-pulseaudio-x11 &
+fi
+if (command -v /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 && ! pgrep polkit-gnome-aut) ; then
+    /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+fi
 # Music
 #run mpd ~/.config/mpd/mpd.conf
 
@@ -33,6 +41,8 @@ run compton --config ~/.config/compton/compton.conf
 
 # Enable numlock on login
 run numlockx
+run pa-applet
+run pamac-tray
 
 # For battery notifications
  run xfce4-power-manager
