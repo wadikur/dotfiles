@@ -11,3 +11,7 @@ syntax enable
 set background=dark
 colorscheme gruvbox
 
+
+" tap into system clipboard
+:set clipboard=unnamed
+
