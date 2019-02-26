@@ -537,6 +537,7 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey, shiftkey }, "b",
       function()
         local s = awful.screen.focused()
+        awful.screen.focused().traybox.visible = not awful.screen.focused().traybox.visible
         s.mywibox.visible = not s.mywibox.visible
         if beautiful.wibar_detached then
           s.useless_wibar.visible = not s.useless_wibar.visible

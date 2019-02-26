@@ -22,14 +22,14 @@ local reboot_command = function()
   awful.keygrabber.stop(exit_screen_grabber)
 end
 local suspend_command = function()
-  awful.spawn.with_shell("i3lock & systemctl suspend")
+  awful.spawn.with_shell("i3lock -i $HOME/Pictures/Wallpaper/cyberpunk.png & systemctl suspend")
   exit_screen_hide()
 end
 local exit_command = function()
   awesome.quit()
 end
 local lock_command = function()
-  awful.spawn.with_shell("i3lock")
+  awful.spawn.with_shell("i3lock -i $HOME/Pictures/Wallpaper/cyberpunk.png")
   exit_screen_hide()
 end
 
