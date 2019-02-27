@@ -519,7 +519,7 @@ keys.globalkeys = gears.table.join(
     end,
               {description = "calcurse", group = "launcher"}),
     -- Spawn ranger in a terminal
-    awful.key({ superkey }, "F2", function() awful.spawn(terminal .. " -e ranger") end,
+    awful.key({ superkey }, "r", function() awful.spawn(terminal .. " -e ranger") end,
               {description = "ranger", group = "launcher"}),
     -- Spawn ncmpcpp in a terminal
     awful.key({ superkey }, "F3", function() awful.spawn(terminal .. " -e ncmpcpp") end,
@@ -556,9 +556,9 @@ keys.globalkeys = gears.table.join(
     -- mpvtube song
     awful.key({ superkey, shiftkey }, "y", function() awful.spawn.with_shell("~/scr/info/mpv-query.sh") end,
               {description = "show mpv media title", group = "launcher"}),
-    -- Spawn file manager
-    awful.key({ superkey, shiftkey }, "f", function() awful.spawn(filemanager, {floating = true}) end,
-      {description = "file manager", group = "launcher"}),
+    -- Spawn firefox
+    awful.key({ superkey, shiftkey }, "f", function() awful.spawn("firefox") end,
+      {description = "firefox", group = "launcher"}),
     -- Spawn htop in a terminal
     awful.key({ superkey }, "p", function() awful.spawn(terminal .. " -e htop") end,
               {description = "htop", group = "launcher"})
