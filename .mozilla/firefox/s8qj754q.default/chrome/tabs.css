@@ -105,13 +105,13 @@ last-visible-tab,
     z-index: 100 !important;
 }
 
-.tabbrowser-tab:not(:hover):not([selected]) .tab-close-button {
+.tabbrowser-tab:not(:hover) .tab-close-button {
     display: none !important;
 }
-/* no close button */
+/* no close button 
 .tabbrowser-tab .tab-close-button {
     display: none !important;
-}
+}*/
 
 /*no scrolling*/
 

@@ -35,7 +35,7 @@ end
 
 local username = os.getenv("USER")
 -- Capitalize username
-local goodbye_widget = wibox.widget.textbox("Goodbye " .. username:sub(1,1):upper()..username:sub(2))
+local goodbye_widget = wibox.widget.textbox("Goodbye Wadi")
 goodbye_widget.font = "sans 50"
 
 local poweroff_icon = wibox.widget.imagebox(beautiful.poweroff_icon)

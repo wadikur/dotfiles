@@ -25,7 +25,7 @@ fi
 #run mpd ~/.config/mpd/mpd.conf
 
 # Emacs daemon
-#run emacs --daemon
+run emacs --daemon
 
 # Load terminal colorscheme and settings
 #xrdb ~/.Xresources
