@@ -480,7 +480,7 @@ keys.globalkeys = gears.table.join(
       {description = "send CONT signal to all firefox processes", group = "other"}),
     awful.key({ superkey }, "F6", function() awful.spawn.with_shell("i3lock") end,
       {description = "lock screen", group = "other"}),
-    awful.key({ superkey }, "q", function()
+    awful.key({ superkey, shiftkey }, "q", function()
         if client.focus ~= nil and client.focus.class == "scratchpad" then
             client.focus.minimized = true
             return
@@ -698,7 +698,7 @@ keys.clientkeys = gears.table.join(
             c:raise()
         end,
         {description = "normal mode", group = "client"}),
-    awful.key({ superkey, shiftkey   }, "q",      function (c) c:kill()                         end,
+    awful.key({ superkey }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     --awful.key({ superkey, ctrlkey }, "space",  awful.client.floating.toggle                     ,
     -- Toggle floating

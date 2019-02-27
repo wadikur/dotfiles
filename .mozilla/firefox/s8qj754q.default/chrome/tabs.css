@@ -42,13 +42,13 @@ last-visible-tab,
 .tabbrowser-tab[selected='true'] .tab-background {
     background: var(--main) !important;
     color: var(--selected-fg) !important;
-    min-height: 36px !important;
+    min-height: 26px !important;
     z-index: 100 !important;
 }
 
 #tabbrowser-tabs {
-    min-height: 36px !important;
-    max-height: 36px !important;
+    min-height: 26px !important;
+    max-height: 26px !important;
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
     background: var(--secondary) !important;
@@ -62,7 +62,7 @@ last-visible-tab,
 
 /* Tab curves */
 .tabbrowser-tab .tab-background {
-    height: 36px !important;
+    height: 26px !important;
     border-radius: 8px 8px 0 0 !important;
     background: var(--secondary) !important;
     position: relative !important;

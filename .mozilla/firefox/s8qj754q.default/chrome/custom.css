@@ -23,7 +23,7 @@
 
 #urlbar {
     border-radius: 20px !important;
-    height: 28px !important;
+    height: 20px !important;
     border: none !important;
     background-color: var(--urlbar-bg) !important;
     color: var(--urlbar-fg) !important;
@@ -45,15 +45,15 @@
     margin-bottom: 1px;
 }
 
-/* Remove Three Dots */
+/* Remove Three Dots 
 #pageActionButton {
   display: none !important;
-}
+}*/
 
 #nav-bar {
     background-image: none !important;
     background-color: var(--main) !important;
-    height: 37px !important;
+    height: 28px !important;
     box-shadow: none !important;
 }
 
@@ -62,11 +62,11 @@
 /* } */
 
 #main-window[sizemode='normal'] #TabsToolbar {
-    height: 24px !important;
+    height: 20px !important;
 }
 
 #main-window[sizemode='normal'] #titlebar-buttonbox {
-    height: 29px !important;
+    height: 20px !important;
     margin-bottom: 14px !important;
 }
 
@@ -75,7 +75,7 @@
 }
 
 #PersonalToolbar {
-    height: 30px !important;
+    height: 20px !important;
     background-color: var(--main) !important;
 }
 
