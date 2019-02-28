@@ -81,16 +81,16 @@ theme.fg_urgent     = urgent_color
 theme.fg_minimize   = xcolor8
 
 -- Gaps
-theme.useless_gap   = dpi(3)
+theme.useless_gap   = dpi(2)
 -- This could be used to manually determine how far away from the
 -- screen edge the bars / notifications should be.
 theme.screen_margin = dpi(3)
 
 -- Borders
-theme.border_width  = dpi(0)
+theme.border_width  = dpi(1)
 theme.border_color = xcolor0
 theme.border_normal = xcolor0
-theme.border_focus  = xcolor0
+theme.border_focus  = xcolor3
 -- Rounded corners
 theme.border_radius = dpi(6)
 

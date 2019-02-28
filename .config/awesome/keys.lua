@@ -545,7 +545,7 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "show or hide wibar", group = "awesome"}),
     -- Open new emacs client frame
-    awful.key({ superkey }, "e", function() awful.spawn.with_shell("em") end,
+    awful.key({ superkey }, "e", function() awful.spawn.with_shell("emacs") end,
       {description = "emacs", group = "launcher"}),
     -- Quick edit config file
     awful.key({ superkey, shiftkey }, "e", function() awful.spawn.with_shell("~/scr/Rofi/rofimacs") end,

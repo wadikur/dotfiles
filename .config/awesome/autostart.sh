@@ -55,8 +55,8 @@ run nm-applet
 #setxkbmap -layout "us,gr,ru" -option "grp:alt_shift_toggle"
 
 # Caps Lock is Escape (Escape remains as is)
- setxkbmap -option caps:swapescape
-
+setxkbmap -option caps:swapescape
+run xcape -t 250 -e 'Alt_L=Shift_L|4;Alt_R=Shift_R|5;Shift_L=parenleft;Shift_R=parenright'
 # Kill redshift processes
 # pkill redshift
 
