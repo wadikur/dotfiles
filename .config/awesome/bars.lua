@@ -91,7 +91,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create a wibox that will only show the tray
     -- Hidden by default. Can be toggled with a keybind.
-    s.traybox = wibox({visible = true, ontop = true, shape = helpers.rbar(), type = "dock"})
+    s.traybox = wibox({visible = true, ontop = false, shape = helpers.rbar(), type = "dock"})
     s.traybox.width = 150
     s.traybox.height = 20
     --s.traybox.x = beautiful.screen_margin * 2

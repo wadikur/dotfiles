@@ -177,3 +177,7 @@ toolbarbutton:not([disabled]):not(.bookmark-item):not(.titlebar-button):not(.sub
 #confirmation-hint {
     display: none !important;
 }
+/*Disable fullscreen animation */
+#navigator-toolbox[fullscreenShouldAnimate] {
+    transition: none !important;
+}
