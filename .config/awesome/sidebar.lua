@@ -217,12 +217,12 @@ local date = wibox.widget.textclock("%A, %B %d")
 -- local date = wibox.widget.textclock("%A, %B %d, %Y")
 date.align = "center"
 date.valign = "center"
-date.font = "sans medium 15"
+date.font = "sans 15"
 
 local fancy_date = wibox.widget.textclock("%-j days around the sun")
 fancy_date.align = "center"
 fancy_date.valign = "center"
-fancy_date.font = "sans 11"
+fancy_date.font = "sans 10"
 
 local mpd_song = require("noodle.mpd_song")
 local mpd_widget_children = mpd_song:get_all_children()
@@ -373,7 +373,7 @@ end
 if beautiful.sidebar_hide_on_mouse_leave then
   local sidebar_activator = wibox({y = 0, width = 1, height = awful.screen.focused().geometry.height, visible = true, ontop = false, opacity = 0, below = true})
   sidebar_activator:connect_signal("mouse::enter", function ()
-                                     sidebar.visible = true
+                                     sidebar.visible = false
   end)
 
   if beautiful.sidebar_position == "right" then

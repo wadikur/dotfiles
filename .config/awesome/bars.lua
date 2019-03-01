@@ -60,15 +60,18 @@ awful.screen.connect_for_each_screen(function(s)
     -- Wibar items
     -- Add or remove widgets here
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
+        layout = wibox.layout.fixed.horizontal,
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
+            textseparator,
+            minimal_tasklist,
+            textseparator,
             pad,
-            start_widget,
         },
         { -- Middle widgets
             layout = wibox.layout.fixed.horizontal,
             -- textseparator,
+            start_widget,
             textseparator,
             icon_taglist,
             textseparator,
@@ -76,10 +79,6 @@ awful.screen.connect_for_each_screen(function(s)
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            textseparator,
-            minimal_tasklist,
-            textseparator,
-            pad
         },
     }
 

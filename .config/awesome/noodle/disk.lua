@@ -20,7 +20,7 @@ end
 -- Use /dev/sdXY according to your setup
 local disk_script = [[
   bash -c "
-  df -k -h /dev/sda1 | tail -1 | awk '{print $4}'
+  df -k -h /dev/sda2 | tail -1 | awk '{print $4}'
   "]]
 
 awful.widget.watch(disk_script, update_interval, function(widget, stdout)

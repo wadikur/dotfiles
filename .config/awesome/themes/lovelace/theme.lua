@@ -168,7 +168,7 @@ theme.separator_fg = xcolor8
 -- (Bar items can be customized in bars.lua)
 theme.wibar_position = "bottom"
 theme.wibar_detached = false
-theme.wibar_height = dpi(30)
+theme.wibar_height = dpi(25)
 theme.wibar_fg = xcolor7
 theme.wibar_bg = xcolor0 .. "00"
 --theme.wibar_opacity = 0.7
