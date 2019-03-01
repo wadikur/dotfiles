@@ -33,7 +33,7 @@ local lock_command = function()
   exit_screen_hide()
 end
 
-local username = os.getenv("USER")
+--local username = os.getenv("USER")
 -- Capitalize username
 local goodbye_widget = wibox.widget.textbox("Goodbye Wadi")
 goodbye_widget.font = "sans 50"
