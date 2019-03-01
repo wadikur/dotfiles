@@ -5,7 +5,7 @@ local beautiful = require("beautiful")
 local wibox = require("wibox")
 
 local helpers = require("helpers")
-
+local hotkeys_popup = require("awful.hotkeys_popup")
 local keys = {}
 
 -- Mod keys
@@ -66,12 +66,12 @@ keys.desktopbuttons = gears.table.join(
 
 -- {{{ Key bindings
 keys.globalkeys = gears.table.join(
-    --awful.key({ superkey,           }, "s",      hotkeys_popup.show_help,
-              --{description="show help", group="awesome"}),
-    --awful.key({ superkey,           }, "comma",   awful.tag.viewprev,
-              --{description = "view previous", group = "tag"}),
-    --awful.key({ superkey,           }, "period",  awful.tag.viewnext,
-              --{description = "view next", group = "tag"}),
+    awful.key({ superkey,           }, "a",      hotkeys_popup.show_help,
+              {description="show help", group="awesome"}),
+    awful.key({ superkey,           }, "comma",   awful.tag.viewprev,
+              {description = "view previous", group = "tag"}),
+    awful.key({ superkey,           }, "period",  awful.tag.viewnext,
+              {description = "view next", group = "tag"}),
 
     -- Focus client by direction
     awful.key({ superkey }, "Down",
@@ -460,20 +460,20 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "toggle compositor", group = "launcher"}),
     -- Media keys
-    awful.key({ superkey }, "period", function() awful.spawn.with_shell("mpc next") end,
-    {description = "next song", group = "media"}),
-    awful.key({ superkey }, "comma", function() awful.spawn.with_shell("mpc prev") end,
-    {description = "previous song", group = "media"}),
-    awful.key({ superkey }, "space", function() awful.spawn.with_shell("mpc toggle") end,
-    {description = "toggle pause/play", group = "media"}),
-    awful.key({ superkey, shiftkey }, "period", function() awful.spawn.with_shell("mpvc next") end,
-    {description = "mpv next song", group = "media"}),
-    awful.key({ superkey, shiftkey }, "comma", function() awful.spawn.with_shell("mpvc prev") end,
-    {description = "mpv previous song", group = "media"}),
-    awful.key({ superkey, shiftkey}, "space", function() awful.spawn.with_shell("mpvc toggle") end,
-    {description = "mpv toggle pause/play", group = "media"}),
-    awful.key({ superkey }, "F8", function() awful.spawn.with_shell("mpvc quit") end,
-    {description = "mpv quit", group = "media"}),
+    -- awful.key({ superkey }, "period", function() awful.spawn.with_shell("mpc next") end,
+    -- {description = "next song", group = "media"}),
+    -- awful.key({ superkey }, "comma", function() awful.spawn.with_shell("mpc prev") end,
+    -- {description = "previous song", group = "media"}),
+    -- awful.key({ superkey }, "space", function() awful.spawn.with_shell("mpc toggle") end,
+    -- {description = "toggle pause/play", group = "media"}),
+    -- awful.key({ superkey, shiftkey }, "period", function() awful.spawn.with_shell("mpvc next") end,
+    -- {description = "mpv next song", group = "media"}),
+    -- awful.key({ superkey, shiftkey }, "comma", function() awful.spawn.with_shell("mpvc prev") end,
+    -- {description = "mpv previous song", group = "media"}),
+    -- awful.key({ superkey, shiftkey}, "space", function() awful.spawn.with_shell("mpvc toggle") end,
+    -- {description = "mpv toggle pause/play", group = "media"}),
+    -- awful.key({ superkey }, "F8", function() awful.spawn.with_shell("mpvc quit") end,
+    -- {description = "mpv quit", group = "media"}),
     awful.key({ superkey }, "F7", function() awful.spawn.with_shell("freeze firefox") end,
       {description = "send STOP signal to all firefox processes", group = "other"}),
     awful.key({ superkey, shiftkey }, "F7", function() awful.spawn.with_shell("freeze -u firefox") end,
