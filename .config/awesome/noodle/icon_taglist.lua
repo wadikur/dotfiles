@@ -35,14 +35,14 @@ for i = 1, ntags do
           if client.focus then
             client.focus:move_to_tag(clicked_tag)
           end
-      end),
-      -- Scroll - Cycle through tags
-      awful.button({ }, 4, function ()
-          awful.tag.viewprev()
-      end),
-      awful.button({ }, 5, function ()
-          awful.tag.viewnext()
       end)
+      -- Scroll - Cycle through tags
+      -- awful.button({ }, 4, function ()
+          -- awful.tag.viewprev()
+      -- end)
+      -- awful.button({ }, 5, function ()
+          -- awful.tag.viewnext()
+      -- end)
   ))
 end
 

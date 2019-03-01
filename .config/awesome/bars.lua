@@ -64,19 +64,21 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             pad,
-            start_widget
-            -- minimal_tasklist
+            start_widget,
         },
         { -- Middle widgets
             layout = wibox.layout.fixed.horizontal,
             -- textseparator,
             textseparator,
             icon_taglist,
+            textseparator,
+            desktop_control,
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             textseparator,
-            desktop_control,
+            minimal_tasklist,
+            textseparator,
             pad
         },
     }

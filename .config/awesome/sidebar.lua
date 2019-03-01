@@ -386,13 +386,13 @@ if beautiful.sidebar_hide_on_mouse_leave then
     gears.table.join(
       awful.button({ }, 2, function ()
           sidebar.visible = not sidebar.visible
-      end),
-      awful.button({ }, 4, function ()
-          awful.tag.viewprev()
-      end),
-      awful.button({ }, 5, function ()
-          awful.tag.viewnext()
       end)
+      -- awful.button({ }, 4, function ()
+      --     awful.tag.viewprev()
+      -- end),
+      -- awful.button({ }, 5, function ()
+      --     awful.tag.viewnext()
+      -- end)
   ))
 end
 
