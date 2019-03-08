@@ -257,4 +257,3 @@ bindkey "^[[1;5D" backward-word
 bindkey "^[[1;5C" forward-word
 # lxterminal doesnt detect diff between backspace and ctrl + backspace
 #bindkey "^?" backward-kill-word
-

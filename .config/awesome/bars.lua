@@ -45,7 +45,8 @@ textseparator.markup = helpers.colorize_text(textseparator.text, beautiful.separ
 
 -- Create padding
 pad = wibox.widget.textbox(" ")
-
+-- Create texclock
+mytextclock = wibox.widget.textclock("%H:%M")
 awful.screen.connect_for_each_screen(function(s)
     -- Create a system tray widget
     s.systray = wibox.widget.systray()
@@ -60,13 +61,14 @@ awful.screen.connect_for_each_screen(function(s)
     -- Wibar items
     -- Add or remove widgets here
     s.mywibox:setup {
-        layout = wibox.layout.fixed.horizontal,
         { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
+            {--Some padding
+                layout = wibox.layout.fixed.horizontal,
+            },
             textseparator,
             minimal_tasklist,
             textseparator,
-            pad,
+            layout = wibox.layout.fixed.horizontal
         },
         { -- Middle widgets
             layout = wibox.layout.fixed.horizontal,
@@ -80,6 +82,8 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
         },
+        expand="none",
+        layout = wibox.layout.align.horizontal,
     }
 
     -- Only set them if they exist, else they overwrite the position variable
@@ -93,7 +97,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a wibox that will only show the tray
     -- Hidden by default. Can be toggled with a keybind.
     s.traybox = wibox({visible = true, ontop = false, shape = helpers.rbar(), type = "dock"})
-    s.traybox.width = 150
+    s.traybox.width =170
     s.traybox.height = 20
     --s.traybox.x = beautiful.screen_margin * 2
     s.traybox.x = s.geometry.width - s.traybox.width - beautiful.screen_margin * 2
@@ -103,7 +107,7 @@ awful.screen.connect_for_each_screen(function(s)
       -- wibox.widget.textbox("test"),
       pad,
       s.systray,
-      pad,
+      mytextclock,
       layout = wibox.layout.align.horizontal
     }
     s.traybox:buttons(gears.table.join(
