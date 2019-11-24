@@ -414,7 +414,7 @@ awful.rules.rules = {
     -- Titlebars of these clients will be hidden regardless of the theme setting
     { rule_any = {
         class = {
-	  "Firefox",
+	        "firefox",
           "qutebrowser",
           -- "feh",
           -- "Gimp",
@@ -560,7 +560,7 @@ awful.rules.rules = {
         class = {
           "Chromium-browser",
           "qutebrowser",
-          "Firefox",
+          "firefox",
           },
      }, properties = { screen = 1, tag = awful.screen.focused().tags[1] } },
 
@@ -606,12 +606,13 @@ awful.rules.rules = {
           "Steam",
           "battle.net.exe",
           "Lutris",
+          "Anki",
           },
      }, properties = { screen = 1, tag = awful.screen.focused().tags[8] } },
 
-
-     { rule = { class = "Firefox" },
-              properties = { opacity = 1, maximized = false, floating = false } },
+    -- This part of the code was implemented for firefox bug
+     -- { rule = { class = "firefox" },
+     --          properties = { opacity = 1, maximized = false, floating = false } },
 
     -- Music
     { rule_any = {

@@ -12,6 +12,7 @@ local keys = require("keys")
 local desktop_control = require("noodle.desktop_control")
 local minimal_tasklist = require("noodle.minimal_tasklist")
 local icon_taglist = require("noodle.icon_taglist")
+local ram_bar = require("noodle.ram_bar")
 
 -- Start button widget (can toggle sidebar, tray, scratchpad)
 start_widget = wibox.widget.imagebox(beautiful.sidebar_icon)
@@ -50,8 +51,6 @@ mytextclock = wibox.widget.textclock("%H:%M")
 awful.screen.connect_for_each_screen(function(s)
     -- Create a system tray widget
     s.systray = wibox.widget.systray()
-
-    -- Wibar detached - Method: Transparent useless bar
     -- Requires compositor
     if beautiful.wibar_detached then
         s.useless_wibar = awful.wibar({ position = beautiful.wibar_position, screen = s, height = beautiful.screen_margin * 2, opacity = 0 })
@@ -81,6 +80,8 @@ awful.screen.connect_for_each_screen(function(s)
         },
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+	    
+	ram_bar,
         },
         expand="none",
         layout = wibox.layout.align.horizontal,

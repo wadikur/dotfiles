@@ -36,7 +36,7 @@ fi
 #run mpd ~/.config/mpd/mpd.conf
 
 # Emacs daemon
-run emacs --daemon
+# run emacs --daemon
 
 # Load terminal colorscheme and settings
 xrdb ~/.Xresources
@@ -90,7 +90,7 @@ awesome-client "awesome.emit_signal(\"$AWESOME_SIGNAL\")"
 # if [[ ! "$SSH_AUTH_SOCK" ]]; then
 #     eval "$(<"$XDG_RUNTIME_DIR/ssh-agent.env")"
 # fi
-eval $(keychain --eval --agents ssh id_rsa)
+eval $(keychain --eval --agents ssh github_rsa)
 
 
 
