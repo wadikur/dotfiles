@@ -440,7 +440,7 @@ keys.globalkeys = gears.table.join(
     end,
     {description = "toggle tray visibility", group = "awesome"}),
     -- Toggle night light
-    awful.key({ superkey }, "x", function() awful.spawn.with_shell("flux") end,
+    awful.key({ superkey }, "x", function() awful.spawn.with_shell("$HOME/.personalConfig/cool_lockscreen/lock.sh") end,
               {description = "toggle night light", group = "launcher"}),
     -- Toggle compositor
     awful.key({ superkey }, "XF86Launch3",
@@ -508,7 +508,7 @@ keys.globalkeys = gears.table.join(
     end,
               {description = "calcurse", group = "launcher"}),
     -- Spawn ranger in a terminal
-    awful.key({ superkey }, "r", function() awful.spawn(terminal .. " -e ranger") end,
+    awful.key({ superkey }, "r", function() awful.spawn(terminal .. " -e ranger",{floating = true }) end,
               {description = "ranger", group = "launcher"}),
     -- Spawn ncmpcpp in a terminal
     awful.key({ superkey }, "F3", function() awful.spawn(terminal .. " -e ncmpcpp") end,

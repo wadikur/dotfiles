@@ -91,7 +91,7 @@ end
 -- {{{ Variable definitions
 terminal = "lxterminal"
 tmux = terminal .. " -e tmux new "
-editor = "vim"
+editor = "nvim"
 --editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor .. " "
 filemanager = "nemo"

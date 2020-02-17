@@ -22,14 +22,14 @@ local reboot_command = function()
   awful.keygrabber.stop(exit_screen_grabber)
 end
 local suspend_command = function()
-  awful.spawn.with_shell("$HOME/Documents/repos/cool_lockscreen/lock.sh&& suspend")
+  awful.spawn.with_shell("$HOME/.personalConfig/cool_lockscreen/lock.sh && systemctl suspend")
   exit_screen_hide()
 end
 local exit_command = function()
   awesome.quit()
 end
 local lock_command = function()
-  awful.spawn.with_shell("$HOME/Documents/repos/cool_lockscreen/lock.sh")
+  awful.spawn.with_shell("$HOME/.personalConfig/cool_lockscreen/lock.sh")
   exit_screen_hide()
 end
 

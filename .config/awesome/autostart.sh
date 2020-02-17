@@ -57,7 +57,9 @@ run pamac-tray
 
 # For battery notifications
  run xfce4-power-manager
-
+#run autolock
+run xautolock -time 8 -locker $HOME/.personalConfig/cool_lockscreen/lock.sh 
+#run xidlehook --not-when-fullscreen --not-when-audio --timer 60 "$HOME/.personalConfig/cool_lockscreen/lock.sh" ""
 # Network manager tray icon
 run nm-applet
 
