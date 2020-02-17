@@ -260,7 +260,7 @@ local function set_wallpaper(s)
         --gears.wallpaper.maximized(wallpaper, s, true)
 
         -- Method 2: Set theme's wallpaper with feh
-        awful.spawn.with_shell("feh --bg-fill ~/Downloads/lovelace.jpg" )
+        awful.spawn.with_shell("feh --bg-fill $HOME/.personalConfig/Wallpapers/lovelace.jpg" )
 
         -- Method 3: Set last wallpaper with feh
         --awful.spawn.with_shell(os.getenv("HOME") .. "/.fehbg")
