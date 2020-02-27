@@ -240,7 +240,7 @@ keys.globalkeys = gears.table.join(
               {description = "open a terminal", group = "launcher"}),
     -- Spawn floating terminal
     awful.key({ superkey, shiftkey }, "Return", function()
-        awful.spawn(terminal, {floating = true, screen_width *0.50,height= screen_height * 0.55})
+        awful.spawn(floating_terminal, {floating = true})
     end,
               {description = "spawn floating terminal", group = "launcher"}),
     awful.key({ superkey, shiftkey }, "r", awesome.restart,
@@ -413,9 +413,16 @@ keys.globalkeys = gears.table.join(
     -- Run program (d for dmenu ;)
     awful.key({ superkey }, "d",
       function()
-        awful.spawn.with_shell("rofi -show combi")
+        awful.spawn.with_shell("rofi -show combi -show-icons")
       end,
       {description = "rofi launcher", group = "launcher"}),
+    -- Open file using Rofi
+    --awful.key({ superkey }, "i",
+    --  function()
+    --    awful.spawn.with_shell("rofi-files ")
+    --  end,
+    --  {description = "rofi file launcher", group = "launcher"}),
+
     -- Dismiss notifications
     awful.key( { ctrlkey }, "space", function()
         naughty.destroy_all_notifications()
@@ -508,7 +515,7 @@ keys.globalkeys = gears.table.join(
     end,
               {description = "calcurse", group = "launcher"}),
     -- Spawn ranger in a terminal
-    awful.key({ superkey }, "r", function() awful.spawn(terminal .. " -e ranger",{floating = true }) end,
+    awful.key({ superkey }, "r", function() awful.spawn(floating_terminal .. " -e ranger",{floating = true }) end,
               {description = "ranger", group = "launcher"}),
     -- Spawn ncmpcpp in a terminal
     awful.key({ superkey }, "F3", function() awful.spawn(terminal .. " -e ncmpcpp") end,

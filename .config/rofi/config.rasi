@@ -1,5 +1,5 @@
 configuration {
-    modi: "combi,windowcd,run";
+    modi: "combi,windowcd,run,drun";
     lines: 10;
     columns: 2;
     font: "Noto Sans Mono 12";
@@ -13,7 +13,7 @@ configuration {
     separator-style: "none";
     hide-scrollbar: true;
     fullscreen: false;
-    fake-transparency: false;
+    fake-transparency: true;
     scroll-method: 1;
     window-format: "[{w}] ·· {c} ··   {t}";
     click-to-exit: true;

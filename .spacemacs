@@ -237,7 +237,7 @@ It should only modify the values of Spacemacs settings."
    ;; (default t)
    dotspacemacs-colorize-cursor-according-to-state t
 
-   dotspacemacs-default-font '("SpaceMono Nerd Font"
+   dotspacemacs-default-font '("Source Code Pro"
                                :size 10.5
                                :weight normal
                                :width normal

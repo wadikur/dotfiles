@@ -23,7 +23,7 @@ URxvt.scrollBar: off
 URxvt.font: xft:monospace:size=12
 URxvt.internalBorder:     22
 ! =================
-*background:	#1D1F28
+*background:	#000000
 *foreground:	#FDFDFD
 *cursorColor:	#C574DD
 *color0:	#282A36

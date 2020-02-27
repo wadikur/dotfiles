@@ -39,7 +39,7 @@ fi
 # run emacs --daemon
 
 # Load terminal colorscheme and settings
-xrdb ~/.Xresources
+#xrdb ~/.Xresources
 
 # Urxvt daemon
 #run urxvtd -q -o -f

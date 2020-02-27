@@ -90,11 +90,13 @@ end
 
 -- {{{ Variable definitions
 terminal = "lxterminal"
+floating_terminal="termite"
 tmux = terminal .. " -e tmux new "
 editor = "nvim"
 --editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor .. " "
 filemanager = "nemo"
+browser="firefox"
 
 -- Get screen geometry
 screen_width = awful.screen.focused().geometry.width
@@ -333,6 +335,9 @@ awful.screen.connect_for_each_screen(function(s)
     -- awful.tag(tagnames, s, layouts)
 end)
 
+--Determines how floating clients should be placed
+local client_placement_f = awful.placement.no_overlap + awful.placement.no_offscreen
+
 -- {{{ Rules
 -- Rules to apply to new clients (through the "manage" signal).
 awful.rules.rules = {
@@ -348,8 +353,27 @@ awful.rules.rules = {
                      size_hints_honor = false,
                      honor_workarea = true,
                      honor_padding = true,
-                     placement = awful.placement.no_overlap+awful.placement.no_offscreen
-     }
+                     -- placement = awful.placement.no_overlap+awful.placement.no_offscreen
+      },
+      callback = function (c)
+        if not awesome.startup then
+          -- If the layout is floating or there are no other visible clients
+          -- Apply placement function
+          if awful.layout.get(mouse.screen) ~= awful.layout.suit.floating or #mouse.screen.clients == 1 then
+            awful.placement.centered(c,{honor_padding = true, honor_workarea=true})
+          else
+            client_placement_f(c, {honor_padding = true, honor_workarea=true, margins = beautiful.useless_gap * 2})
+          end
+
+          -- Hide titlebars if required by the theme
+          if not beautiful.titlebars_enabled then
+            decorations.hide(c)
+            -- awful.titlebar.hide(c)
+          end
+
+        end
+      end
+
     },
 
     -- Add titlebars to normal clients and dialogs
@@ -465,18 +489,18 @@ awful.rules.rules = {
     },
 
     -- Fixed terminal geometry
-    { rule_any = {
-        class = {
-          "Termite",
-          "mpvtube",
-          "kitty",
-          "st-256color",
-          "st",
-          "URxvt",
-	  "Lxterminal"
-          },
-      }, properties = { width = screen_width * 0.50, height = screen_height * 0.55 }
-    },
+   { rule_any = {
+       class = {
+         "Termite",
+         "mpvtube",
+         "kitty",
+         "st-256color",
+         "st",
+         "URxvt",
+         "Lxterminal"
+         },
+     }, properties = { width = screen_width * 0.50, height = screen_height * 0.55 }
+   },
 
     -- File managers
     -- { rule_any = {
@@ -581,7 +605,7 @@ awful.rules.rules = {
           "TelegramDesktop",
           "TeamSpeak 3",
           },
-     }, properties = { screen = 1, tag = awful.screen.focused().tags[4] } },
+     }, properties = { screen = 1, tag = awful.screen.focused().tags[4] }, floating = false},
 
     --Emacs 
     { rule_any = {
@@ -641,48 +665,48 @@ client.connect_signal("manage", function (c)
     -- i.e. put it at the end of others instead of setting it master.
     if not awesome.startup then awful.client.setslave(c) end
 
-    if awesome.startup and
-      not c.size_hints.user_position
-      and not c.size_hints.program_position then
-        -- Prevent clients from being unreachable after screen count changes.
-        awful.placement.no_offscreen(c)
-    end
+    -- if awesome.startup and
+    --   not c.size_hints.user_position
+    --   and not c.size_hints.program_position then
+    --     -- Prevent clients from being unreachable after screen count changes.
+    --     awful.placement.no_offscreen(c)
+    -- end
 
-    -- Hide titlebars if required by the theme
-    if not beautiful.titlebars_enabled then
-        awful.titlebar.hide(c, beautiful.titlebar_position)
-    end
+    -- -- Hide titlebars if required by the theme
+    -- if not beautiful.titlebars_enabled then
+    --     awful.titlebar.hide(c, beautiful.titlebar_position)
+    -- end
 
-    -- If the layout is not floating, every floating client that appears is centered
-    if awful.layout.get(mouse.screen) ~= awful.layout.suit.floating then
-      awful.placement.centered(c,{honor_workarea=true})
-    else
-      -- If the layout is floating, and there is no other client visible, center it
-      if #mouse.screen.clients == 1 then
-        awful.placement.centered(c,{honor_workarea=true})
-      end
-    end
+    -- -- If the layout is not floating, every floating client that appears is centered
+    -- if awful.layout.get(mouse.screen) ~= awful.layout.suit.floating then
+    --   awful.placement.centered(c,{honor_workarea=true})
+    -- else
+    --   -- If the layout is floating, and there is no other client visible, center it
+    --   if #mouse.screen.clients == 1 then
+    --     awful.placement.centered(c,{honor_workarea=true})
+    --   end
+    -- end
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.
---client.connect_signal("mouse::enter", function(c)
---    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
---        and awful.client.focus.filter(c) then
---        client.focus = c
---    end
---end)
+client.connect_signal("mouse::enter", function(c)
+    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+        and awful.client.focus.filter(c) then
+        client.focus = c
+    end
+end)
 
 -- Rounded corners
 if beautiful.border_radius ~= 0 then
     client.connect_signal("manage", function (c, startup)
-        if not c.fullscreen then
+        if not c.fullscreen and not c.maximized then
             c.shape = helpers.rrect(beautiful.border_radius)
         end
     end)
 
     -- Fullscreen clients should not have rounded corners
     client.connect_signal("property::fullscreen", function (c)
-        if c.fullscreen then
+        if c.fullscreen or c.maximized then
             c.shape = helpers.rect()
         else
             c.shape = helpers.rrect(beautiful.border_radius)
@@ -717,6 +741,9 @@ beautiful.taglist_shape = helpers.rrect(beautiful.taglist_item_roundness)
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
 
+-- Set mouse resize mode (live or after)
+awful.mouse.resize.set_mode("live")
+
 -- Scratchpad gets minimized when it loses focus
 -- client.connect_signal("unfocus", function(c)
 --     if c.class == "scratchpad" or c.class == "calendar" then
@@ -744,25 +771,22 @@ end)
 --end)
 
 -- Floating: restore geometry
-tag.connect_signal('property::layout',
-    function(t)
-        for k, c in ipairs(t:clients()) do
-            if awful.layout.get(mouse.screen) == awful.layout.suit.floating then
-                -- Geometry x = 0 and y = 0 most probably means that the
-                -- clients have been spawned in a non floating layout, and thus
-                -- they don't have their floating_geometry set properly.
-                -- If that is the case, don't change their geometry
-                local cgeo = awful.client.property.get(c, 'floating_geometry')
-                if cgeo ~= nil then
-                    if not (cgeo.x == 0 and cgeo.y == 0) then
-                        c:geometry(awful.client.property.get(c, 'floating_geometry'))
-                    end
-                end
-                --c:geometry(awful.client.property.get(c, 'floating_geometry'))
-            end
-        end
-    end
-)
+tag.connect_signal('property::layout', function(t)
+                     for k, c in ipairs(t:clients()) do
+                       if awful.layout.get(mouse.screen) == awful.layout.suit.floating then
+                         -- Geometry x = 0 and y = 0 most probably means that the client's
+                         -- floating_geometry has not been set yet.
+                         -- If that is the case, don't change their geometry
+                         -- TODO does this affect clients that are really placed in 0,0 ?
+                         local cgeo = awful.client.property.get(c, 'floating_geometry')
+                         if cgeo and not (cgeo.x == 0 and cgeo.y == 0) then
+                           c:geometry(awful.client.property.get(c, 'floating_geometry'))
+                         end
+                         --c:geometry(awful.client.property.get(c, 'floating_geometry'))
+                       end
+                     end
+end)
+
 
 client.connect_signal('manage',
     function(c)
