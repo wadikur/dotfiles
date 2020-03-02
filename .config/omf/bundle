@@ -2,4 +2,6 @@ package argu
 package expand
 package fasd
 theme batman
+theme dangerous
 theme default
+theme spacefish

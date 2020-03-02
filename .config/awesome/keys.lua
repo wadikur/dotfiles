@@ -417,11 +417,11 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "rofi launcher", group = "launcher"}),
     -- Open file using Rofi
-    --awful.key({ superkey }, "i",
-    --  function()
-    --    awful.spawn.with_shell("rofi-files ")
-    --  end,
-    --  {description = "rofi file launcher", group = "launcher"}),
+    awful.key({ superkey }, "i",
+     function()
+       awful.spawn.with_shell("rofi-files ")
+     end,
+     {description = "rofi file launcher", group = "launcher"}),
 
     -- Dismiss notifications
     awful.key( { ctrlkey }, "space", function()

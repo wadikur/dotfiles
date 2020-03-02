@@ -1,9 +1,11 @@
+
 .tabbrowser-tab::before, .tabbrowser-tab::after {
 	visibility: collapse;
 }
 
 #TabsToolbar {
 	background-color: var(--chrome-secondary-background-color) !important;
+  /* height:25px; */
 }
 
 .titlebar-spacer[type="pre-tabs"],
@@ -232,3 +234,10 @@ background-color: transparent !important;
     position:relative;
     z-index: 0;
 }
+
+/*
+  * {
+    font-family: "Ubuntu";
+}
+*/
+
