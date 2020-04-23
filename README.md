@@ -14,7 +14,7 @@ It contains awesomewm configuration with some zsh shell configuration, which is 
 
 ## dev1 branch
 
-It contains awesomewm configuration from [elenapan's dotfiles][https://github.com/elenapan/dotfiles] with the theme *Lovelace*. It is a modified version of the master branch.
+It contains awesomewm configuration from [elenapan's dotfiles](https://github.com/elenapan/dotfiles) with the theme *Lovelace*. It is a modified version of the master branch.
 
 OS: Manjaro Awesome
 
