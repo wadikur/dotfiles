@@ -8,7 +8,7 @@ This repository contains the dotfiles of my systems.
 
 ## master branch
 
-It contains awesomewm configuration with some zsh shell configuration, which is not very useful, though.
+It contains awesomewm configuration with some zsh shell configuration.
 
 
 
