@@ -38,19 +38,15 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(shell-scripts
-     python
+     (python :variables
+             python-backend 'anaconda
+             python-formatter 'yapf)
      html
      lua
      javascript
      ;;(ansible :variables
      ;;        ansible-auto-encrypt-decrypt t)
      ;;octave
-     (auto-completion :variables
-                      auto-completion-return-key-behavior 'complete
-                      auto-completion-tab-key-behavior 'cycle
-                      auto-completion-complete-with-key-sequence '"jk"
-                      auto-completion-complete-with-key-sequence-delay 0.3
-                      auto-completion-private-snippets-directory nil)
      better-defaults
      emacs-lisp
      git
@@ -69,7 +65,6 @@ This function should only modify configuration layer settings."
             shell-default-position 'bottom)
      spell-checking
      syntax-checking
-     treemacs
      ranger
      ;; version-control
      neotree
@@ -81,9 +76,9 @@ This function should only modify configuration layer settings."
             )
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode)
-     xkcd
      fasd
      imenu-list
+     org-roam
      )
 
    ;; List of additional packages that will be installed without being
@@ -94,6 +89,8 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages '(pdf-tools
+                                      anki-editor
+                                      org-fragtog
                                       org-noter)
 
    ;; A list of packages that cannot be updated.
@@ -219,10 +216,7 @@ It should only modify the values of Spacemacs settings."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press `SPC T n' to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(molokai
-                         dracula
-                         spacemacs-dark
-                         )
+   dotspacemacs-themes '(spacemacs-dark)
 
    ;; Set the theme for the Spaceline. Supported themes are `spacemacs',
    ;; `all-the-icons', `custom', `doom', `vim-powerline' and `vanilla'. The
@@ -238,7 +232,8 @@ It should only modify the values of Spacemacs settings."
    dotspacemacs-colorize-cursor-according-to-state t
 
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 10.5
+                               ;; "Iosevka Custom Oblique"
+                               :size 14
                                :weight normal
                                :width normal
                                :powerline-scale 0.8)
@@ -405,7 +400,7 @@ It should only modify the values of Spacemacs settings."
    ;; This can be temporary disabled by pressing `C-q' before `)'. (default nil)
    dotspacemacs-smart-closing-parenthesis nil
 
-   ;; Select a scope to highlight delimiters. Possible values are `any',
+   ;; Select a scope to highlight delimiters. gossible values are `any',
    ;; `current', `all' or `nil'. Default is `all' (highlight any scope and
    ;; emphasis the current one). (default 'all)
    dotspacemacs-highlight-delimiters 'all
@@ -533,6 +528,53 @@ before packages are loaded."
   (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
   (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
+  ;; org-fragtog configuration, it's latex for org-mode
+  (add-hook 'org-mode-hook 'org-fragtog-mode)
+  (setq org-format-latex-options
+        '(:foreground default :background default :scale 1.6 :html-foreground "Black" :html-background "Transparent" :html-scale 1.0 :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+  ;; Org-Roam
+  (setq org-roam-directory "~/org/roam/")
+  (defun orviz/org-roam--backlinks-list-with-content (file)
+    (with-temp-buffer
+      (if-let* ((backlinks (org-roam--get-backlinks file))
+                (grouped-backlinks (--group-by (nth 0 it) backlinks)))
+          (progn
+            (insert (format "\n\n* %d Backlinks\n"
+                            (length backlinks)))
+            (dolist (group grouped-backlinks)
+              (let ((file-from (car group))
+                    (bls (cdr group)))
+                (insert (format "** [[file:%s][%s]]\n"
+                                file-from
+                                (org-roam--get-title-or-slug file-from)))
+                (dolist (backlink bls)
+                  (pcase-let ((`(,file-from _ ,props) backlink))
+                    (insert (s-trim (s-replace "\n" " " (plist-get props :content))))
+                    (insert "\n\n")))))))
+      (buffer-string)))
+
+  (defun orviz/org-export-preprocessor (backend)
+    (let ((links (orviz/org-roam--backlinks-list-with-content (buffer-file-name))))
+      (unless (string= links "")
+        (save-excursion
+          (goto-char (point-max))
+          (insert links)))))
+
+  (add-hook 'org-export-before-processing-hook 'orviz/org-export-preprocessor)
+  (setq org-publish-project-alist
+        '(("orviz"
+           :base-directory "~/org/roam/"
+           :base-extension "org"
+           :publishing-directory "~/test/orviz/public/"
+           :recursive t
+           :publishing-function org-html-publish-to-html
+           ;; :headline-levels
+           :section-numbers nil
+           :with-toc nil
+           ;; :include ".*"
+           :html-head-extra
+           "<link rel=\"stylesheet\" href=\"/public/static/stylesheet.css\" />"
+           :html-postamble nil)))
   )
 ;;This is macro for the todo file, it pushes all the todos to one file
 ;; (with-eval-after-load 'org-agenda
@@ -586,7 +628,7 @@ This function is called at the very end of Spacemacs initialization."
      ("\\?\\?\\?+" . "#dc752f"))))
  '(package-selected-packages
    (quote
-    (noflet sbt-mode scala-mode org-noter utop tuareg caml seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake ocp-indent ob-elixir mvn minitest meghanada maven-test-mode treemacs pfuture groovy-mode groovy-imports gradle-mode flycheck-ocaml merlin flycheck-mix flycheck-credo emojify emoji-cheat-sheet-plus dune company-emoji chruby bundler inf-ruby auto-complete-rst alchemist elixir-mode yaml-mode jinja2-mode company-ansible ansible-doc ansible tablist dracula-theme cyberpunk-theme pdf-tools magic-latex-buffer company-reftex company-auctex auctex insert-shebang flycheck-bashate fish-mode company-shell keychain-environment yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode bui tree-mode lsp-mode cython-mode counsel-gtags company-anaconda blacken anaconda-mode pythonic web-mode tagedit slim-mode scss-mode sass-mode pug-mode impatient-mode helm-css-scss haml-mode emmet-mode counsel-css counsel swiper ivy company-web web-completion-data add-node-modules-path yasnippet-snippets xterm-color xkcd ws-butler writeroom-mode winum which-key web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org symon symbol-overlay string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs ranger rainbow-delimiters prettier-js popwin persp-mode pcre2el password-generator paradox ox-gfm overseer orgit org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-bullets org-brain open-junk-file nodejs-repl neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide hybrid-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-rtags flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fasd fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline disaster diminish diff-hl devdocs define-word cpp-auto-include company-tern company-statistics company-rtags company-lua company-c-headers column-enforce-mode clean-aindent-mode clang-format centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (posframe org-fragtog lsp-treemacs anki-editor org-roam emacsql-sqlite emacsql noflet sbt-mode scala-mode org-noter utop tuareg caml seeing-is-believing rvm ruby-tools ruby-test-mode ruby-refactor ruby-hash-syntax rubocopfmt rubocop rspec-mode robe rbenv rake ocp-indent ob-elixir mvn minitest meghanada maven-test-mode treemacs pfuture groovy-mode groovy-imports gradle-mode flycheck-ocaml merlin flycheck-mix flycheck-credo emojify emoji-cheat-sheet-plus dune company-emoji chruby bundler inf-ruby auto-complete-rst alchemist elixir-mode yaml-mode jinja2-mode company-ansible ansible-doc ansible tablist dracula-theme cyberpunk-theme pdf-tools magic-latex-buffer company-reftex company-auctex auctex insert-shebang flycheck-bashate fish-mode company-shell keychain-environment yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pyvenv pip-requirements lsp-python-ms live-py-mode importmagic epc ctable concurrent deferred helm-pydoc helm-gtags helm-cscope xcscope ggtags dap-mode bui tree-mode lsp-mode cython-mode counsel-gtags company-anaconda blacken anaconda-mode pythonic web-mode tagedit slim-mode scss-mode sass-mode pug-mode impatient-mode helm-css-scss haml-mode emmet-mode counsel-css counsel swiper ivy company-web web-completion-data add-node-modules-path yasnippet-snippets xterm-color xkcd ws-butler writeroom-mode winum which-key web-beautify vterm volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org symon symbol-overlay string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs ranger rainbow-delimiters prettier-js popwin persp-mode pcre2el password-generator paradox ox-gfm overseer orgit org-projectile org-present org-pomodoro org-mime org-journal org-download org-cliplink org-bullets org-brain open-junk-file nodejs-repl neotree nameless mwim multi-term move-text mmm-mode markdown-toc magit-svn magit-gitflow macrostep lorem-ipsum livid-mode link-hint json-navigator json-mode js2-refactor js-doc indent-guide hybrid-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate google-c-style golden-ratio gnuplot gitignore-templates github-search github-clone gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe git-gutter-fringe+ gist gh-md fuzzy forge font-lock+ flyspell-correct-helm flycheck-rtags flycheck-pos-tip flycheck-package flx-ido fill-column-indicator fasd fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav editorconfig dumb-jump dotenv-mode doom-modeline disaster diminish diff-hl devdocs define-word cpp-auto-include company-tern company-statistics company-rtags company-lua company-c-headers column-enforce-mode clean-aindent-mode clang-format centered-cursor-mode browse-at-remote auto-yasnippet auto-highlight-symbol auto-dictionary auto-compile aggressive-indent ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(pdf-view-midnight-colors (quote ("#b2b2b2" . "#292b2e"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

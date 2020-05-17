@@ -61,6 +61,8 @@ local exit_screen = require("exit_screen")
 -- }}}
 
 -- {{{ Third party
+-- local conky = require("conky")
+-- conky.options = "-c ~/.config/conky/conky.conf.bk"
 -- }}}
 
 -- {{{ Error handling

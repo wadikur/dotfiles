@@ -51,3 +51,14 @@
 ;;
 ;; You can also try 'gd' (or 'C-c g d') to jump to their definition and see how
 ;; they are implemented.
+(use-package! org-roam
+  :commands (org-roam-insert org-roam-find-file org-roam)
+  :init
+  (setq org-roam-directory "~/org/roam")
+  (map! :leader
+        :prefix "n"
+        :desc "Org-Roam-Insert" "i" #'org-roam-insert
+        :desc "Org-Roam-Find"   "/" #'org-roam-find-file
+        :desc "Org-Roam-Buffer" "r" #'org-roam)
+  :config
+  (org-roam-mode +1))

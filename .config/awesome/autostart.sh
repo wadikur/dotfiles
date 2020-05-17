@@ -63,6 +63,9 @@ run xautolock -time 8 -locker $HOME/.personalConfig/cool_lockscreen/lock.sh
 # Network manager tray icon
 run nm-applet
 
+run redshift
+
+run conky conky
 # Keyboard
 #setxkbmap -layout "us,gr" -option "grp:alt_shift_toggle"
 #setxkbmap -layout "us,gr,ru" -option "grp:alt_shift_toggle"

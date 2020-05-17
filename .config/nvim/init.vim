@@ -1,9 +1,9 @@
 " ~~~ Plugins ~~~
-" call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 " Plug 'shougo/deoplete.nvim'
 " Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'itchyny/lightline.vim'
-" Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
 " Plug 'tpope/vim-surround'
 " Plug 'lambdalisue/suda.vim'
 " Plug 'jiangmiao/auto-pairs'
@@ -11,7 +11,7 @@
 " Plug 'vimwiki/vimwiki'
 " Plug 'tpope/vim-markdown'
 " Plug 'nelstrom/vim-markdown-folding'
-" call plug#end()
+call plug#end()
 
 " Highlight the line on which the cursor lives.
 set nocursorline

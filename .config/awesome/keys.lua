@@ -417,7 +417,7 @@ keys.globalkeys = gears.table.join(
       end,
       {description = "rofi launcher", group = "launcher"}),
     -- Open file using Rofi
-    awful.key({ superkey }, "i",
+    awful.key({ superkey }, "y",
      function()
        awful.spawn.with_shell("rofi-files ")
      end,
@@ -433,14 +433,16 @@ keys.globalkeys = gears.table.join(
     -- Screenshots
     awful.key( { }, "Print", function() awful.spawn.with_shell("screenshot.sh") end,
               {description = "take full screenshot", group = "screenshots"}),
-    awful.key( { superkey, shiftkey }, "o", function() awful.spawn.with_shell("screenshot.sh -s") end,
+    awful.key( { superkey, ctrlkey }, "Print", function() awful.spawn.with_shell("screenshot.sh -s") end,
               {description = "select area to capture", group = "screenshots"}),
-    awful.key( { superkey, ctrlkey }, "o", function() awful.spawn.with_shell("screenshot.sh -c") end,
+    awful.key( { superkey, shiftkey }, "Print", function() awful.spawn.with_shell("screenshot.sh -c") end,
               {description = "select area to copy to clipboard", group = "screenshots"}),
-    awful.key( { superkey }, "Print", function() awful.spawn.with_shell("screenshot.sh -b") end,
+    awful.key( { superkey, shiftkey }, "o", function() awful.spawn.with_shell("screenshot.sh -b") end,
               {description = "browse screenshots", group = "screenshots"}),
-    awful.key( { superkey, shiftkey }, "Print", function() awful.spawn.with_shell("screenshot.sh -e") end,
+    awful.key( { superkey, ctrlkey }, "o", function() awful.spawn.with_shell("screenshot.sh -e") end,
               {description = "edit most recent screenshot with gimp", group = "screenshots"}),
+    awful.key( { superkey }, "Print", function() awful.spawn.with_shell("screenshot.sh -f") end,
+                {description= "Copy the full screen to clipboard", group = "screenshots"}),
     -- Toggle tray visibility
     awful.key({ superkey }, "=", function ()
         awful.screen.focused().traybox.visible = not awful.screen.focused().traybox.visible
@@ -547,7 +549,7 @@ keys.globalkeys = gears.table.join(
     awful.key({ superkey, shiftkey }, "e", function() awful.spawn.with_shell("~/scr/Rofi/rofimacs") end,
       {description = "quick edit", group = "launcher"}),
     -- mpvtube
-    awful.key({ superkey }, "y", function() awful.spawn.with_shell("~/scr/Rofi/rofi_mpvtube") end,
+    awful.key({ superkey,ctrlkey }, "y", function() awful.spawn.with_shell("~/scr/Rofi/rofi_mpvtube") end,
               {description = "mpvtube", group = "launcher"}),
     -- mpvtube song
     awful.key({ superkey, shiftkey }, "y", function() awful.spawn.with_shell("~/scr/info/mpv-query.sh") end,
@@ -557,7 +559,14 @@ keys.globalkeys = gears.table.join(
       {description = "firefox", group = "launcher"}),
     -- Spawn htop in a terminal
     awful.key({ superkey }, "p", function() awful.spawn(terminal .. " -e htop") end,
-              {description = "htop", group = "launcher"})
+              {description = "htop", group = "launcher"}),
+    awful.key({ superkey }, "i",      function ()
+        local tags = awful.screen.focused().tags
+        for i = 1, 10 do
+          tags[i].selected = false
+        end
+                                               end,
+      {description="show no tags", group="tag"})
 )
 
 keys.clientkeys = gears.table.join(
